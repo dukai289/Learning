@@ -90,7 +90,8 @@ git clone https://gitee.com/InternLM/InternLM.git
 ```
 
 ## 3.2 加载数据
-定义读取md和txt文件列表的函数 (JupyterLab中试运行)
+`代码片段，暂不运行`  
+定义读取md和txt文件列表的函数
 ```python
 import os 
 def get_files(dir_path):
@@ -132,7 +133,8 @@ def get_text(dir_path):
         docs.extend(loader.load())
     return docs
 ```
-## 3.3 构建向量数据库 (JupyterLab中试运行)
+## 3.3 构建向量数据库
+`代码片段，暂不运行`  
 文本切分
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -288,8 +290,10 @@ class InternLM_LLM(LLM):
     def _llm_type(self) -> str:
         return "InternLM"
 ```
-# 5. 构建检索问答链
-## 5.1 加载向量数据库  (JupyterLab中试运行)
+# 5. 探索：构建检索问答链
+这部分内容`JupyterLab中试运行`
+## 5.1 加载向量数据库  
+`JupyterLab中试运行`  
 ```python
 from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
@@ -308,7 +312,8 @@ vectordb = Chroma(
 )
 ```
 
-## 5.2 实例化自定义 LLM 与 Prompt Template  (JupyterLab中试运行)
+## 5.2 实例化自定义 LLM 与 Prompt Template
+`JupyterLab中试运行`  
 实例化一个基于 InternLM 自定义的 LLM 对象
 ```python
 from LLM import InternLM_LLM
@@ -333,14 +338,15 @@ template = """使用以下上下文来回答用户的问题。如果你不知道
 QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template=template)
 ```
 
-## 5.3 构建检索问答链  (JupyterLab中试运行)
+## 5.3 构建检索问答链
+`JupyterLab中试运行`  
 构建
 ```python
 from langchain.chains import RetrievalQA
 
 qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
 ```
-试运行
+对比LLM与RAG
 ```python
 # 检索问答链回答效果
 question = "什么是InternLM"
@@ -468,6 +474,6 @@ demo.launch()
 ```
 
 ## 6.4 运行
-将上述代码封装为`run_gradio.py`脚本  
-在开发机上启动服务  
+将上述代码(`6.1` & `6.2` & `6.3`)封装为`run_gradio.py`脚本  
+在开发机上启动服务`python run_gradio.py`  
 通过SSH端口转发，在本地访问
