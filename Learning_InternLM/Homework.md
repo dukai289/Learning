@@ -24,5 +24,7 @@
 
 # Chapter 3 RAG
 ## 3.1 基础作业 `知识库助手` 
+![test](./pictures/homework_RAG.png)
+![test](./pictures/homework_RAG_2.png)
 ## 3.2 进阶作业 `垂直领域专业知识库`
 ，`OpenXLab`上部署（截图，并提供应用地址）

@@ -37,7 +37,10 @@ pip install langchain==0.0.292 gradio==4.4.0 chromadb==0.4.15 sentence-transform
 ### 2.3.1 安装开源词向量模型 Sentence Transformer
 安装huggingface_hub
 ```bash
-pip install -U huggingface_hub
+conda install huggingface_hub[cli]
+# pip install -U "huggingface_hub[cli]"
+# pip install huggingface-cli
+# pip install -U huggingface_hub
 ```
 在`/root/data`目录下新建python文件`download_hf.py`
 ```python
@@ -87,7 +90,7 @@ git clone https://gitee.com/InternLM/InternLM.git
 ```
 
 ## 3.2 加载数据
-定义读取md和txt文件列表的函数
+定义读取md和txt文件列表的函数 (JupyterLab中试运行)
 ```python
 import os 
 def get_files(dir_path):
@@ -129,7 +132,7 @@ def get_text(dir_path):
         docs.extend(loader.load())
     return docs
 ```
-## 3.3 构建向量数据库
+## 3.3 构建向量数据库 (JupyterLab中试运行)
 文本切分
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -158,8 +161,8 @@ vectordb = Chroma.from_documents(
 vectordb.persist()
 ```
 
-## 3.4 完整代码
-新建`/root/data/demo`目录，编写`toVectorDB.py`脚本
+## 3.4 完整代码 of 3.2 & 3.3
+新建`/root/data/demo`目录，编写`toVectorDB.py`脚本后运行
 ```python
 # 首先导入所需第三方库
 from langchain.document_loaders import UnstructuredFileLoader
@@ -286,7 +289,7 @@ class InternLM_LLM(LLM):
         return "InternLM"
 ```
 # 5. 构建检索问答链
-## 5.1 加载向量数据库
+## 5.1 加载向量数据库  (JupyterLab中试运行)
 ```python
 from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
@@ -305,7 +308,7 @@ vectordb = Chroma(
 )
 ```
 
-## 5.2 实例化自定义 LLM 与 Prompt Template
+## 5.2 实例化自定义 LLM 与 Prompt Template  (JupyterLab中试运行)
 实例化一个基于 InternLM 自定义的 LLM 对象
 ```python
 from LLM import InternLM_LLM
@@ -330,7 +333,7 @@ template = """使用以下上下文来回答用户的问题。如果你不知道
 QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template=template)
 ```
 
-## 5.3 构建检索问答链
+## 5.3 构建检索问答链  (JupyterLab中试运行)
 构建
 ```python
 from langchain.chains import RetrievalQA
