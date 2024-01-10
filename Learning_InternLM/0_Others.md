@@ -30,6 +30,7 @@ ssh -CNg -L 6006:127.0.0.1:6006 -i  C:/Users/dukai/.ssh/InternStudio root@ssh.in
 命令解读：在本地监听`6006`端口，并将流量转发到远程主机`ssh.intern-ai.org.cn`的`33090`端口(`-i`用来指定私钥文件)，再由远程主机转发到`127.0.0.1:6006`
 
 # 3. Tmux
+[Tmux使用教程 阮一峰](https://www.ruanyifeng.com/blog/2019/10/tmux.html[)
 ## 3.1 安装
 ```bash
 # Ubuntu 或 Debian
@@ -40,4 +41,35 @@ $ sudo yum install tmux
 
 # Mac
 $ brew install tmux
+```
+## 3.2 基本使用
+```bash
+# 新建session
+tmux new -s <session-name>
+
+# ls
+tmux ls
+
+# session与window分离
+tmux detach
+
+# 接入
+tmux attach -t 0
+
+# kill
+tmux kill-session -t 0
+
+# switch
+tmux switch -t 0
+
+# rename
+tmux rename-session -t 0 <new-name>
+```
+## 3.3 示例
+```bash
+tmux new -s test_session
+tmux detach
+tmux ls
+tmux info
+tmux kill-session -t test_session
 ```
