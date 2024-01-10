@@ -44,7 +44,7 @@ export PATH=$PATH:~/.local/bin
 xtuner list-cfg
 ```
 
-# 3 大规模对齐
+# 3. 大规模对齐
 通过在 `OASST1` 上微调，使得 `InternLm-7B` 实现大规模对齐
 ## 3.1 工作目录
 ```bash
@@ -96,6 +96,7 @@ vim internlm_chat_7b_qlora_oasst1_e3_copy.py
 
 
 ## 3.5 微调
+### 3.5.1 目录结构
 查看 `~/ft-oasst1/` 目录结构
 ```bash
 # apt-get install tree
@@ -128,12 +129,12 @@ tree ~/ft-oasst1/
     |-- openassistant_best_replies_eval.jsonl
     `-- openassistant_best_replies_train.jsonl
 ```
-进行微调
+### 3.5.2 进行微调
 ```bash
 # NPROC_PER_NODE=${GPU_NUM} xtuner train ${CONFIG_NAME_OR_PATH} --deepspeed deepspeed_zero2
 nohup xtuner train ./internlm_chat_7b_qlora_oasst1_e3_copy.py --deepspeed deepspeed_zero2 >> ./log_xtuner.txt 2>&1 &
 ```  
-
+### 3.5.3 日志
 微调时会生成 `work_dirs` 目录
 ```bash
 .
@@ -172,10 +173,12 @@ nohup xtuner train ./internlm_chat_7b_qlora_oasst1_e3_copy.py --deepspeed deepsp
         `-- internlm_chat_7b_qlora_oasst1_e3_copy.py
 ```
 其中日志文件在 `work_dirs/internlm_chat_7b_qlora_oasst1_e3_copy` 下，可以用 `tail -f -n 30 {log.txt}` 命令来查看。  
+### 3.5.4 微调完成
 微调完成后，再次查看 `~/ft-oasst1/` 目录结构，结果应当如下
 ```bash
 
 ```
+### 3.5.5 转换
 将得到的 PTH 模型转换为 HuggingFace 模型，即：生成 Adapter 文件夹
 ```bash
 # xtuner convert pth_to_hf ${CONFIG_NAME_OR_PATH} ${PTH_file_dir} ${SAVE_PATH}
@@ -188,6 +191,7 @@ xtuner convert pth_to_hf ./internlm_chat_7b_qlora_oasst1_e3_copy.py ./work_dirs/
 ```bash
 
 ```
+### 3.5.6 合并
 将 HuggingFace adapter 合并到大语言模型
 ```bash
 xtuner convert merge ./internlm-chat-7b ./hf ./merged --max-shard-size 2GB
@@ -218,7 +222,7 @@ python ./cli_demo.py
 ```
 
 
-# 4 医学知识
+# 4. 医学知识
 通过在 `MedQA` 上微调，使得 `InternLm-7B` 获得医学知识
 ## 4.1 工作目录
 ```bash
@@ -229,7 +233,7 @@ mkdir ~/ft-medqa && cd ~/ft-medqa
 cp -r /root/share/temp/model_repos/internlm-chat-7b .
 ```
 
-# 5 Agent能力
+# 5. Agent能力
 通过在 `MS-Agent` 上微调，使得 `InternLm-7B` 获得Agent能力
 ## 5.1 工作目录
 ```bash

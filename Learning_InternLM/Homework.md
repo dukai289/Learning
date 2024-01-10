@@ -27,3 +27,5 @@
 
 ## 3.2 `垂直领域专业知识库`
 `OpenXLab`上部署（截图，并提供应用地址）
+
+# Chapter 4 Fine-tuning
