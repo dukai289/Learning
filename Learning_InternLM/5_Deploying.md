@@ -34,3 +34,5 @@ conda activate lmdeploy
 ```bash
 pip install 'lmdeploy[all]==v0.1.0'
 ```
+
+# 3. 模型转换
