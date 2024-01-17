@@ -435,6 +435,25 @@ while True:
 python ./cli_demo.py
 ```
 
+```bash
+cp /root/code/InternLM/web_demo.py .
+vim web_demo.py
+```
+```diff
+- AutoModelForCausalLM.from_pretrained("/root/model/Shanghai_AI_Laboratory/internlm-chat-7b", trust_remote_code=True)
++ AutoModelForCausalLM.from_pretrained("./merged")
+
+
+- tokenizer = AutoTokenizer.from_pretrained("/root/model/Shanghai_AI_Laboratory/internlm-chat-7b", trust_remote_code=True)
++ tokenizer = AutoTokenizer.from_pretrained("./merged")
+```
+```bash
+streamlit run web_demo.py --server.address 127.0.0.1 --server.port 6006
+```
+```bash
+ssh -CNg -L 6006:127.0.0.1:6006 -i  C:/Users/dukai/.ssh/InternStudio root@ssh.intern-ai.org.cn -p 33090
+```
+
 
 # 4. 医学知识
 通过在 `MedQA` 上微调，使得 `InternLm-7B` 获得医学知识

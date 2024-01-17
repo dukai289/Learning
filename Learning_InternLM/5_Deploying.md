@@ -36,3 +36,13 @@ pip install 'lmdeploy[all]==v0.1.0'
 ```
 
 # 3. 模型转换
+## 3.1 模型转换
+
+### 3.1.1 模型转换
+
+```bash
+lmdeploy convert --model_name_or_path /share/internlm-base/internlm-base --output_dir /
+```
+
+ 
+[test](./4_Fine-tuning.md)
